@@ -1,0 +1,22 @@
+version: '3.2'
+services:
+  database:
+    container_name: database
+    image: postgres:13.3-alpine
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USERNAME=postgres
+    ports:
+      - "5432:5432"
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: rest-api-anyvision
+    ports:
+      - "8085:8085"
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USERNAME=postgres
+    depends_on:
+      - database
